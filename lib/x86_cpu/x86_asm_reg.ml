@@ -20,5 +20,5 @@ let decode reg =
   match Reg.name reg |> Sexp.of_string |> spec_of_sexp with
   | `Nil -> None
   | #t as r -> Some r
-  | exception exn -> Error.failwiths "unknown register"
+  | exception exn -> Error.failwiths ~here:Lexing.dummy_pos "unknown register"
                        reg Reg.sexp_of_t

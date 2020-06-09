@@ -74,7 +74,7 @@ module Make(CPU : X86CPU) : RR = struct
 
   let var t =
     if CPU.avaliable t then var_all t
-    else Error.failwiths "invalid reg variable"
+    else Error.failwiths ~here:Lexing.dummy_pos "invalid reg variable"
         t X86_asm.sexp_of_reg
 
   let bvar r = var r |> Bil.var
@@ -106,7 +106,7 @@ module Make(CPU : X86CPU) : RR = struct
       | #Reg.r32, `x86_64 -> Bil.(cast unsigned bitsize e)
       | #Reg.r32, `x86 | #Reg.r64, `x86_64 | #Reg.segment_base, _
       | #Reg.segment, _ | #Reg.r256, _ -> e
-      | #Reg.r64, `x86 -> Error.failwiths "invalid reg"
+      | #Reg.r64, `x86 -> Error.failwiths ~here:Lexing.dummy_pos "invalid reg"
                             r X86_asm.sexp_of_reg
     in
     Bil.(lhs := rhs)

@@ -61,6 +61,12 @@ let name = Univ_map.Key.name
 let of_statement = ident
 
 module Map = Univ_map.Make1(struct
+    type nonrec 'a t = 'a Type_equal.Id.t
+
+    let sexp_of_t = Type_equal.Id.sexp_of_t
+    let to_type_id x = x
+  end)
+  (struct
     type ('a,'m) t = ('a,'m) observers
     let sexp_of_t _ _ = sexp_of_opaque
   end)

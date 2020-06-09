@@ -19,7 +19,8 @@ module Make (CPU : X86CPU) (RR : RR) (IM : IM) : MM = struct
           | #X86_asm.Reg.gpr -> RR.of_mc_exn base |> gpr |> some
           | `IP | `EIP | `RIP ->
             Memory.max_addr mem' |> Word.succ |> ip |> some
-          | b -> Error.failwiths "invalid base" b X86_asm.Reg.sexp_of_t)
+          | b -> Error.failwiths ~here:Lexing.dummy_pos "invalid base" b
+                   X86_asm.Reg.sexp_of_t)
 
     end
 
@@ -43,7 +44,7 @@ module Make (CPU : X86CPU) (RR : RR) (IM : IM) : MM = struct
         match seg with
         | None -> None
         | Some (#Reg.segment as s) -> base s
-        | Some r -> Error.failwiths "invalid segment" r
+        | Some r -> Error.failwiths ~here:Lexing.dummy_pos "invalid segment" r
                       X86_asm.Reg.sexp_of_t in
       let map = Option.value_map ~default:None in
       let base = map ~f:(Base.create mem) base in
@@ -63,7 +64,8 @@ module Make (CPU : X86CPU) (RR : RR) (IM : IM) : MM = struct
       | #Reg.r64, _
       | #Reg.segment_base, _ -> RR.get reg
       | (#Reg.segment | #Reg.r128 | #Reg.r256), _ ->
-        Error.failwiths "invalid address register" reg RR.sexp_of_t
+        Error.failwiths ~here:Lexing.dummy_pos "invalid address register" reg
+          RR.sexp_of_t
 
     let make_scale scale =
       let shift = match scale with
@@ -71,7 +73,8 @@ module Make (CPU : X86CPU) (RR : RR) (IM : IM) : MM = struct
         | 2 -> Some 1
         | 4 -> Some 2
         | 8 -> Some 3
-        | s -> Error.failwiths "invalid memory scale" s sexp_of_int in
+        | s -> Error.failwiths ~here:Lexing.dummy_pos "invalid memory scale" s
+                 sexp_of_int in
       Option.map ~f:(fun s -> Word.of_int ~width:2 s |> Bil.int) shift
 
     let disp_exp disp =

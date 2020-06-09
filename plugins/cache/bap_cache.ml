@@ -68,9 +68,9 @@ let root () =
 
 let ensure_dir_exists path =
   try
-    Unix.mkdir path 0o700
+    Caml_unix.mkdir path 0o700
   with
-  | Unix.(Unix_error (EEXIST,_,_)) -> ()
+  | Caml_unix.(Unix_error (EEXIST,_,_)) -> ()
   | exn -> raise exn
 
 let rec mkdir path =
@@ -89,9 +89,9 @@ let mkdtemp ?(mode=0o0700) ?tmp_dir ?(prefix="") ?(suffix="") () =
       | Some tmp -> tmp in
     let path =
       String.concat ~sep:Filename.dir_sep [tmp; prefix; name; suffix] in
-    match Unix.mkdir path mode with
+    match Caml_unix.mkdir path mode with
     | () -> path
-    | exception Unix.Unix_error(Unix.EEXIST,_,_) ->
+    | exception Caml_unix.Unix_error(Caml_unix.EEXIST,_,_) ->
       genname () |> create in
   genname () |> create
 
@@ -108,11 +108,11 @@ let mkdir_from_tmp ~target ~f path =
   with_temp_dir path
     ~f:(fun tmp_dir ->
         f tmp_dir;
-        try Unix.rename tmp_dir target
+        try Caml_unix.rename tmp_dir target
         with
         (* these errors occur if the destination exists and is not empty *)
-        | Unix.(Unix_error (EEXIST,_,_))
-        | Unix.(Unix_error (ENOTEMPTY,_,_)) -> ()
+        | Caml_unix.(Unix_error (EEXIST,_,_))
+        | Caml_unix.(Unix_error (ENOTEMPTY,_,_)) -> ()
         | exn -> raise exn)
 
 let init_cache_dir path =
@@ -156,7 +156,7 @@ module Upgrade = struct
     let open Compatibility.V2 in
     let rename from to_ =
       Sys.rename from to_;
-      Unix.chmod to_ 0o444 in
+      Caml_unix.chmod to_ 0o444 in
     try
       let idx = Utils.binable_from_file (module Compatibility.V2) index in
       Map.iteri idx.entries ~f:(fun ~key ~data:{path} ->
@@ -187,7 +187,7 @@ let size () =
     Array.fold ~init:0L ~f:(fun s f ->
         try
           let file = path // f in
-          Int64.(s + Unix.LargeFile.( (stat file).st_size ))
+          Int64.(s + Caml_unix.LargeFile.( (stat file).st_size ))
         with _ -> s) in
   Int64.(to_int_exn (size / 1024L / 1024L))
 

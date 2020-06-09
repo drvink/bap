@@ -102,9 +102,9 @@ let register_loader ctxt =
       Or_error.ok_exn
 
     let length_of_file filename =
-      let desc = Unix.openfile filename Unix.[O_RDONLY] 0o400 in
-      let {Unix.LargeFile.st_size} = Unix.LargeFile.fstat desc in
-      Unix.close desc;
+      let desc = Caml_unix.openfile filename Caml_unix.[O_RDONLY] 0o400 in
+      let {Caml_unix.LargeFile.st_size} = Caml_unix.LargeFile.fstat desc in
+      Caml_unix.close desc;
       st_size
 
     let length_of_data str =

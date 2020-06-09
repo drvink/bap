@@ -22,12 +22,12 @@ let ping_frames = "|/-\\|/-\\"
 
 let tasks = String.Table.create ()
 
-let startup = Unix.gettimeofday ()
+let startup = Caml_unix.gettimeofday ()
 
 let rendering = ref false
 
 let time_elapsed base =
-  let now = Unix.gettimeofday () in
+  let now = Caml_unix.gettimeofday () in
   Float.(now - base)
 
 let duration x y =
@@ -54,7 +54,7 @@ module Ansi = struct
 end
 
 let task_second {created} =
-  duration created @@ Unix.gettimeofday ()
+  duration created @@ Caml_unix.gettimeofday ()
 
 
 
@@ -138,7 +138,7 @@ let render_progress tick =
 let update_slots = function
   | Event.Log.Progress {task; note; stage; total} ->
     Hashtbl.map_inplace tasks ~f:(fun s -> {s with active=false});
-    let now = Unix.gettimeofday () in
+    let now = Caml_unix.gettimeofday () in
     Hashtbl.update tasks task ~f:(function
         | None -> {note; stage; total; created=now; updated=now; active=true}
         | Some slot -> {
@@ -146,7 +146,7 @@ let update_slots = function
             stage;
             note = Option.first_some note slot.note;
             total = Option.first_some total slot.total;
-            updated = Unix.gettimeofday ();
+            updated = Caml_unix.gettimeofday ();
             active = true
           });
     Hashtbl.mapi_inplace tasks ~f:(fun ~key:name ~data:task' ->
@@ -158,7 +158,7 @@ let update_slots = function
 
 let sample ~interval stream =
   Stream.parse stream ~init:0. ~f:(fun last_updated _ ->
-      let now = Unix.gettimeofday () in
+      let now = Caml_unix.gettimeofday () in
       if duration last_updated now >= interval
       then (Some (), now)
       else (None, last_updated))

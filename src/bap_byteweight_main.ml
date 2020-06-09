@@ -157,7 +157,7 @@ let train loader operation length comp db paths _ctxt =
   let init = Map.empty (module String) in
   let files = List.fold ~init paths ~f:add_path in
   let total = Map.length files in
-  let start = Unix.gettimeofday () in
+  let start = Caml_unix.gettimeofday () in
   let errors = ref 0 in
   let step = ref 0 in
   Map.iter files ~f:(fun path ->
@@ -171,7 +171,7 @@ let train loader operation length comp db paths _ctxt =
         eprintf "Error: %a\n%!" Extension.Error.pp err;
         (incr errors));
   printf "Processed %d files out of %d in %g seconds\n"
-    (total - !errors) total (Unix.gettimeofday () -. start);
+    (total - !errors) total (Caml_unix.gettimeofday () -. start);
   printf "Signatures were stored in %s\n%!" db;
   Ok ()
 

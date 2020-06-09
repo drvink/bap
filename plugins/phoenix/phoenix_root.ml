@@ -10,7 +10,7 @@ let (/) = Filename.concat
 
 let mkdir dir =
   if not (Sys.file_exists dir)
-  then Unix.mkdir dir 0o777
+  then Caml_unix.mkdir dir 0o777
   else if not (Sys.is_directory dir)
   then raise Target_directory_is_a_file
 

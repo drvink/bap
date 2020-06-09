@@ -13,7 +13,7 @@ let rec mkdir path =
   let par = Filename.dirname path in
   if not(Sys.file_exists par) then mkdir par;
   if not(Sys.file_exists path) then
-    Unix.mkdir path perm
+    Caml_unix.mkdir path perm
 
 let (/) = Filename.concat
 
@@ -63,13 +63,13 @@ let lock_filename logdir =
   Filename.get_temp_dir_name () / name
 
 let lock file =
-  let lock = Unix.openfile file Unix.[O_RDWR; O_CREAT] 0o666 in
-  Unix.lockf lock Unix.F_LOCK 0;
+  let lock = Caml_unix.openfile file Caml_unix.[O_RDWR; O_CREAT] 0o666 in
+  Caml_unix.lockf lock Caml_unix.F_LOCK 0;
   lock
 
 let unlock lock =
-  Unix.lockf lock Unix.F_ULOCK 0;
-  Unix.close lock
+  Caml_unix.lockf lock Caml_unix.F_ULOCK 0;
+  Caml_unix.close lock
 
 let open_log_channel user_dir =
   try

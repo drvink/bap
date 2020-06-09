@@ -8,4 +8,4 @@ Executable "baptop"
   Build$:         flag(everything) || flag(toplevel)
   ByteOpt: -thread
   CompiledObject: byte
-  BuildDepends:   utop, threads, findlib.dynload
+  BuildDepends:   utop, threads, findlib.dynload, ppx_jane

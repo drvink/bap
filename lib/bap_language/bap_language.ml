@@ -60,6 +60,12 @@ module Std = struct
 
     module Table(T : T1) : Table with type 'a data = 'a T.t = struct
       module U = Univ_map.Make(struct
+          type 'a t = 'a Type_equal.Id.t
+
+          let sexp_of_t = Type_equal.Id.sexp_of_t
+          let to_type_id x = x
+        end)
+        (struct
           type 'a t = 'a T.t
           let sexp_of_t  _ = sexp_of_opaque
         end)

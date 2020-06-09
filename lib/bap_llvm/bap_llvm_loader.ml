@@ -146,12 +146,12 @@ let provide_entry =
 let provide_symbols =
   iter_rows LLVM.symbol_entry @@ fun bias (name, addr, size, off, value) ->
   let addr = Int64.(addr + bias) in
-  provide_if (size > 0L) [
+  provide_if (Int64.(size > 0L)) [
     Ogre.provide symbol_value addr value;
     Ogre.provide named_symbol addr name;
     Ogre.provide symbol_chunk addr size addr;
     Ogre.request LLVM.code_entry ~that:(fun (n,o,s) ->
-        o = off && n = name && s = size) >>= fun entry ->
+        Int64.(o = off && String.equal n name && s = size)) >>= fun entry ->
     if Option.is_some entry then Ogre.provide code_start addr
     else Ogre.return ()
   ]
@@ -337,15 +337,15 @@ let from_data ~base ~pdb filename data =
   translate_to_image_spec base
 
 let map_file path =
-  let fd = Unix.(openfile path [O_RDONLY] 0o400) in
+  let fd = Caml_unix.(openfile path [O_RDONLY] 0o400) in
   try
     let data =
-      Unix.map_file
+      Caml_unix.map_file
         fd Bigarray.char Bigarray.c_layout false [|-1|] in
-    Unix.close fd;
+    Caml_unix.close fd;
     Ok (Bigarray.array1_of_genarray data)
   with exn ->
-    Unix.close fd;
+    Caml_unix.close fd;
     Or_error.errorf "unable to process file %s: %s"
       path (Exn.to_string exn)
 [@@warning "-D"]

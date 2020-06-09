@@ -30,3 +30,4 @@ Executable "postinstall"
   MainIs:         postinstall.ml
   Install:        false
   CompiledObject: best
+  BuildDepends: ppx_module_timer

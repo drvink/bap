@@ -33,7 +33,7 @@ let ext = FilePath.replace_extension
 let (/) = Filename.concat
 
 let run cmd =
-  let inp = Unix.open_process_in cmd in
+  let inp = Caml_unix.open_process_in cmd in
   let r = In_channel.input_lines inp in
   In_channel.close inp; r
 
@@ -60,13 +60,13 @@ let setup_headless_env path =
   let var = "LD_LIBRARY_PATH" in
   let old_path,new_path =
     try
-      Unix.getenv var, lib ^ ":" ^ Unix.getenv var
+      Caml_unix.getenv var, lib ^ ":" ^ Caml_unix.getenv var
     with Caml.Not_found -> "", lib in
-  Unix.putenv var new_path;
+  Caml_unix.putenv var new_path;
   fun () ->
     try
       FileUtil.rm ~recurse:true [lib];
-      if String.(old_path <> "") then Unix.putenv var old_path
+      if String.(old_path <> "") then Caml_unix.putenv var old_path
     with _ -> ()
 
 let cleanup_minidump () =
@@ -79,18 +79,18 @@ let cleanup_minidump () =
     | files ->
       info "ida minidump is not empty";
       let lock = sprintf "%s/lock" dump_path in
-      let lock = Unix.openfile lock Unix.[O_RDWR; O_CREAT] 0o666 in
-      Unix.lockf lock Unix.F_LOCK 0;
+      let lock = Caml_unix.openfile lock Caml_unix.[O_RDWR; O_CREAT] 0o666 in
+      Caml_unix.lockf lock Caml_unix.F_LOCK 0;
       protect ~f:(fun () ->
           List.iter files ~f:Sys.remove)
         ~finally:(fun () ->
-            Unix.lockf lock Unix.F_ULOCK 0;
-            Unix.close lock)
+            Caml_unix.lockf lock Caml_unix.F_ULOCK 0;
+            Caml_unix.close lock)
 
 (* ida works fine only if everything is in the same folder  *)
 let run (t:ida) cmd =
   cleanup_minidump ();
-  let cwd = Unix.getcwd () in
+  let cwd = Caml_unix.getcwd () in
   let clean = match t.curses with
     | Some path -> setup_headless_env path
     | None -> fun () -> () in

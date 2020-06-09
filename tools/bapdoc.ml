@@ -85,7 +85,7 @@ let packages =
 
 let mkdir path =
   if not (Sys.file_exists path) then
-    Unix.mkdir path 0o770
+    Caml_unix.mkdir path 0o770
 
 let run fmt =
   let cmd c =

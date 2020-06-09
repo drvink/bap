@@ -113,12 +113,12 @@ let load_image = Command.create `python
 
 
 let mapfile path : Bigstring.t =
-  let fd = Unix.(openfile path [O_RDONLY] 0o400) in
-  let size = Unix.((fstat fd).st_size) in
+  let fd = Caml_unix.(openfile path [O_RDONLY] 0o400) in
+  let size = Caml_unix.((fstat fd).st_size) in
   let data =
     Mmap.V1.map_file
       fd Bigarray.char Bigarray.c_layout false [|size|] in
-  Unix.close fd;
+  Caml_unix.close fd;
   Bigarray.array1_of_genarray data
 [@@warning "-D"]
 

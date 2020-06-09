@@ -77,15 +77,15 @@ let parse_func_start input accept init =
   with _ -> init
 
 let run cmd ~f ~init : _ Base.Continue_or_stop.t =
-  let env = Unix.environment () in
-  let stdin,stdout,stderr = Unix.open_process_full cmd env in
+  let env = Caml_unix.environment () in
+  let stdin,stdout,stderr = Caml_unix.open_process_full cmd env in
   let data = In_channel.fold_lines stdin ~f ~init in
-  match Unix.close_process_full (stdin,stdout,stderr) with
-  | Unix.WEXITED 0 -> Stop data
-  | Unix.WEXITED n ->
+  match Caml_unix.close_process_full (stdin,stdout,stderr) with
+  | Caml_unix.WEXITED 0 -> Stop data
+  | Caml_unix.WEXITED n ->
     info "`%s' has failed with %d" cmd n;
     Continue data
-  | Unix.WSIGNALED _ | Unix.WSTOPPED _ ->
+  | Caml_unix.WSIGNALED _ | Caml_unix.WSTOPPED _ ->
     (* a signal number is internal to OCaml, so don't print it *)
     info "command `%s' was terminated by a signal" cmd;
     Continue data

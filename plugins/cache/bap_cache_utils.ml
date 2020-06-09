@@ -11,12 +11,12 @@ let write_to_file ?temp_dir writer file data =
   protect ~f:(fun () -> Data.Write.to_channel writer ch data)
     ~finally:(fun () ->
         Out_channel.close ch;
-        Unix.chmod tmp 0o444;
+        Caml_unix.chmod tmp 0o444;
         Sys.rename tmp file)
 
 let open_temp temp_dir =
   let tmp = Filename.temp_file ~temp_dir "tmp" "index" in
-  try tmp, Unix.(openfile tmp [O_RDWR;] 0o600)
+  try tmp, Caml_unix.(openfile tmp [O_RDWR;] 0o600)
   with e -> Sys.remove tmp; raise e
 
 let binable_to_file : type t.
@@ -35,14 +35,14 @@ let binable_to_file : type t.
       ignore @@
       T.bin_write_t (Bigarray.array1_of_genarray buf) ~pos:0 data)
     ~finally:(fun () ->
-        Unix.close fd;
-        Unix.chmod tmp 0o444;
+        Caml_unix.close fd;
+        Caml_unix.chmod tmp 0o444;
         Sys.rename tmp file)
 
 let binable_from_file : type t.
   (module Binable.S with type t = t) -> string -> t = fun b file ->
   let module T = (val b) in
-  let fd = Unix.(openfile file [O_RDONLY] 0o400) in
+  let fd = Caml_unix.(openfile file [O_RDONLY] 0o400) in
   let data = Mmap.V1.map_file fd
       Bigarray.char Bigarray.c_layout false [|-1|] in
   let pos_ref = ref 0 in

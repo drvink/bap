@@ -49,13 +49,13 @@ let parse =
 
 let extract_symbols file =
   let cmd = sprintf "radare2 -2 -q -cisj %s" file in
-  let input = Unix.open_process_in cmd in
+  let input = Caml_unix.open_process_in cmd in
   let out = try parse@@Yojson.Safe.from_channel input with
     | exn ->
       warning "failed to extract symbols: %s" (Exn.to_string exn);
       [] in
-  match Unix.close_process_in input with
-  | Unix.WEXITED 0 -> out
+  match Caml_unix.close_process_in input with
+  | Caml_unix.WEXITED 0 -> out
   | WEXITED n ->
     warning "radare2 failed with the exit code %d" n;
     out

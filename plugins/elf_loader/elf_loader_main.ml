@@ -151,8 +151,8 @@ let img_of_elf data elf : Img.t Or_error.t =
     Seq.filter_mapi elf.e_segments (create_segment addr) |>
     Seq.to_list |>
     List.partition_map ~f:(function
-        | Ok s    -> `Fst s
-        | Error e -> `Snd e) in
+        | Ok s    -> First s
+        | Error e -> Second e) in
   let symbols,errors =
     match create_symtab data endian elf with
     | Ok syms -> syms,errors

@@ -93,7 +93,7 @@ let min_entry_size = 4 (* Kb *)
 let entry path name =
   try
     let path = path // name in
-    let size = Unix.( (stat path).st_size ) / 1024 in
+    let size = Caml_unix.( (stat path).st_size ) / 1024 in
     Some {path; size;}
   with _ -> None
 

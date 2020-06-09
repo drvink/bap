@@ -95,7 +95,7 @@ module Cmdline = struct
               | `Protocol_error err ->
                 exitf "Protocol error: %a" Error.pp err
               | `System_error err ->
-                exitf "System error: %s" @@ Unix.error_message err
+                exitf "System error: %s" @@ Caml_unix.error_message err
               | `No_provider ->
                 exitf "No provider for the given URI"
               | `Ambiguous_uri ->

@@ -50,9 +50,9 @@ module TraceWriter = struct
 
   let make_channel path =
     try
-      let fd = Unix.(openfile path [O_WRONLY; O_TRUNC; O_CREAT] 0o666) in
-      Ok (Unix.out_channel_of_descr fd)
-    with Unix.Unix_error (er,_,_) -> Error (`System_error er)
+      let fd = Caml_unix.(openfile path [O_WRONLY; O_TRUNC; O_CREAT] 0o666) in
+      Ok (Caml_unix.out_channel_of_descr fd)
+    with Caml_unix.Unix_error (er,_,_) -> Error (`System_error er)
 
   let write uri t =
     make_channel (Uri.path uri) >>= fun ch ->
@@ -68,9 +68,9 @@ module TraceReader = struct
 
   let make_channel path =
     try
-      let () = Unix.(access path [R_OK]) in
+      let () = Caml_unix.(access path [R_OK]) in
       Ok (In_channel.create path)
-    with Unix.Unix_error (er,_,_) -> Error (`System_error er)
+    with Caml_unix.Unix_error (er,_,_) -> Error (`System_error er)
 
   let next_event ch = match Proto.read_event ch with
     | None -> In_channel.close ch; None

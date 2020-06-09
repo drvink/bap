@@ -526,7 +526,7 @@ let register_pass ?(autorun=false) ?(runonce=autorun) ?(deps=[]) ?name main : un
   let finishes =
     Stream.either successes failures |>
     Stream.map ~f:Either.value in
-  let now () = Unix.gettimeofday () in
+  let now () = Caml_unix.gettimeofday () in
   let main project =
     Signal.send started (now ());
     try

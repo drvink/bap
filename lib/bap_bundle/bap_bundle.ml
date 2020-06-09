@@ -29,7 +29,7 @@ module Std = struct
         ?(author=getenv "USER")
         ?(version="1.0.0")
         ?main
-        ?(date=Unix.time ())
+        ?(date=Caml_unix.time ())
         ?(desc = "description not provided")
         ?(requires=[])
         ?(provides=[])

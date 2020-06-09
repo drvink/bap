@@ -55,7 +55,7 @@ module Binary = struct
 end
 
 let pp_time fmt t =
-  let open Unix in
+  let open Caml_unix in
   let tm = gmtime t in
   Format.fprintf fmt "%02d:%02d:%02d %02d.%02d.%04d GMT"
     tm.tm_hour tm.tm_min tm.tm_sec tm.tm_mday

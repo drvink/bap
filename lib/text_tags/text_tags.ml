@@ -104,7 +104,7 @@ module Attr = struct
   let attrs = String.Hash_set.create ()
   let show = Hash_set.add attrs
   let hide = Hash_set.remove attrs
-  let colorify = ref (Unix.isatty Unix.stdout)
+  let colorify = ref (Caml_unix.isatty Caml_unix.stdout)
   let print_colors enabled =
     colorify := enabled
 

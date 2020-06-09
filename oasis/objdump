@@ -8,7 +8,7 @@ Library objdump_plugin
   FindlibName:      bap-plugin-objdump
   CompiledObject:   best
   BuildDepends:     re.pcre, bap-core-theory,
-                    core_kernel, bap-knowledge,
+                    core_kernel, core_kernel.caml_unix, bap-knowledge,
                     bitvec, bitvec-order, bitvec-sexp,
                     bap-main
   InternalModules:  Objdump_main, Objdump_config

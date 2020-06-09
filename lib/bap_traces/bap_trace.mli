@@ -11,7 +11,7 @@ type t
 
 type io_error = [
   | `Protocol_error of Error.t   (** Data encoding problem         *)
-  | `System_error of Unix.error  (** System error                  *)
+  | `System_error of Caml_unix.error  (** System error                  *)
 ]
 
 type error = [

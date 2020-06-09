@@ -132,14 +132,14 @@ module Type = struct
       Digest.string @@
       sprintf "%s:%Ld" path (Int64.bits_of_float time) in
     let new_digest input =
-      digest_path input @@ Unix.gettimeofday () in
+      digest_path input @@ Caml_unix.gettimeofday () in
     let exception Stopped_checking in
     let rec digest checked ~init path =
       if checked < max_checks
-      then match Unix.stat path with
-        | {Unix.st_kind = S_REG; st_mtime} ->
+      then match Caml_unix.stat path with
+        | {Caml_unix.st_kind = S_REG; st_mtime} ->
           checked+1,init ++ digest_path path st_mtime
-        | {Unix.st_kind = S_DIR; st_mtime} ->
+        | {Caml_unix.st_kind = S_DIR; st_mtime} ->
           let init = checked+1,init ++ digest_path path st_mtime in
           Sys.readdir path |>
           Array.fold ~init ~f:(fun (checked,init) entry ->
@@ -1198,8 +1198,8 @@ let init
     let result = Plugins.load ?env:features ?provides:requires ~library () in
     let plugins,failures =
       List.partition_map result ~f:(function
-          | Ok p -> `Fst p
-          | Error (p,e) -> `Snd (p,e)) in
+          | Ok p -> First p
+          | Error (p,e) -> Second (p,e)) in
     let version = match Bap_main_config.build_id with
       | "" -> version
       | id -> sprintf "%s+%s" version id in

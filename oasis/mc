@@ -19,4 +19,4 @@ Executable "bap-mc"
   Build$:         flag(everything) || flag(mc)
   Install:        true
   CompiledObject: best
-  BuildDepends: unix
+  BuildDepends: unix, ppx_jane

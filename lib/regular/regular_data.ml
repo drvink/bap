@@ -98,6 +98,12 @@ module Class = struct
   }
 
   module Registry = Univ_map.Make(struct
+      type nonrec 'a t = 'a Type_equal.Id.t
+
+      let sexp_of_t = Type_equal.Id.sexp_of_t
+      let to_type_id x = x
+    end)
+    (struct
       type 'a t = 'a definition
       let sexp_of_t _ = sexp_of_opaque
     end)

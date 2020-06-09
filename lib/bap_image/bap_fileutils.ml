@@ -2,15 +2,15 @@ open Core_kernel
 open Option.Monad_infix
 
 let mapfile path : Bigstring.t option =
-  let fd = Unix.(openfile path [O_RDONLY] 0o400) in
+  let fd = Caml_unix.(openfile path [O_RDONLY] 0o400) in
   try
     let data =
       Mmap.V1.map_file
         fd Bigarray.char Bigarray.c_layout false [|-1|] in
-    Unix.close fd;
+    Caml_unix.close fd;
     Some (Bigarray.array1_of_genarray data)
   with exn ->
-    Unix.close fd;
+    Caml_unix.close fd;
     None
 [@@warning "-D"]
 
