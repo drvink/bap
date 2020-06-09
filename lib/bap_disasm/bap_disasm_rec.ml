@@ -113,7 +113,10 @@ let with_unit =
            comment "[Rec.{run,scan} arch mem] provides a unit for [mem]");
   fun arch mem ->
     let width = Size.in_bits (Arch.addr_size arch) in
-    let is_little = Arch.endian arch = LittleEndian in
+    let is_little = match Arch.endian arch with
+      | LittleEndian -> true
+      | BigEndian -> false
+    in
     let lower = Word.to_bitvec @@ Memory.min_addr mem
     and upper = Word.to_bitvec @@ Memory.max_addr mem in
     KB.promising Theory.Label.unit ~promise:(fun label ->

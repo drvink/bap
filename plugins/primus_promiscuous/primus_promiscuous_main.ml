@@ -225,7 +225,7 @@ let desc =
    every branch the state is duplicated."
 ;;
 
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
   `P desc ;
   `P

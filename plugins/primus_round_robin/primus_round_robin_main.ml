@@ -75,7 +75,7 @@ let register enabled =
     ~desc:"Enables the round-robin scheduler (experimental)."
 
 open Config;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
 
   `P

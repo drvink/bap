@@ -45,7 +45,7 @@ let init () =
   Symbolizer.provide agent (Symbolizer.set_path symbolizer file)
 
 let () =
-  Config.manpage [
+  let () = Config.manpage [
     `S "DESCRIPTION";
     `P "Extracts symbol information from the program relocations.";
 
@@ -54,5 +54,5 @@ let () =
         doesn't have an address we use an address of a callsite.";
     `S "SEE ALSO";
     `P "$(b,bap-plugin-llvm)(1) code";
-  ];
+  ] in
   Config.when_ready (fun _ -> init ())

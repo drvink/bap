@@ -209,7 +209,7 @@ let enable_injection () =
   Primus.Machine.add_component (module Intro) [@warning "-D"]
 
 open Config;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
 
   `P "This plugin implements a compatibility layer between the new
@@ -281,7 +281,7 @@ let marking_disabled = flag "no-marks"
 
 ;;
 
-when_ready begin fun {get=is} ->
+let () = when_ready begin fun {get=is} ->
   if is injection_enabled || is projection_enabled
   then if is enabled || is marking_disabled
     then invalid_arg "Incorrect mix of old and new parameters";

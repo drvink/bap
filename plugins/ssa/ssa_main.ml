@@ -6,7 +6,7 @@ let main proj =
   Term.map sub_t (Project.program proj) ~f:Sub.ssa;;
 
 
-Config.manpage [
+let () = Config.manpage [
   `S "SYNOPSIS";
   `Pre "
     $(b,mname)

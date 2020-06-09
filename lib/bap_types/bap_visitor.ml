@@ -197,7 +197,7 @@ class ['a] exp_finder = object(self)
   inherit ['a option return] exp_visitor
   method find exp : 'a option =
     with_return (fun cc ->
-        ignore (self#visit_exp exp cc);
+        ignore (self#visit_exp exp cc : 'a option return);
         None)
 end
 
@@ -206,7 +206,7 @@ class ['a] bil_finder = object(self)
   inherit ['a option return] bil_visitor
   method find stmts : 'a option =
     with_return (fun cc ->
-        ignore (self#run stmts cc);
+        ignore (self#run stmts cc : 'a option return);
         None)
 end
 

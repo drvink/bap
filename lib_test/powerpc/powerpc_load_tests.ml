@@ -203,7 +203,7 @@ let lhaux arch ctxt =
       r5 := int (Word.of_int ~width disp);
       r9 := int (Word.of_int ~width addr);
     ] in
-  let expected = Word.of_int64 ~width 0x00000000_000000fabL in
+  let expected = Word.of_int64 ~width 0x00000000000000fabL in
   check_gpr init bytes r1 expected arch ctxt;
   let expected_addr = Word.of_int ~width (addr + disp) in
   check_gpr init bytes r5 expected_addr arch ctxt

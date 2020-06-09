@@ -27,14 +27,14 @@ let unquote s =
 let dedup_whitespace str =
   let buf = Buffer.create (String.length str) in
   let push = Buffer.add_char buf in
-  String.fold str ~init:`white ~f:(fun state c ->
+  (String.fold str ~init:`white ~f:(fun state c ->
       let ws = Char.is_whitespace c in
       if not ws then push c;
       match state,ws with
       | `white,true  -> `white
       | `white,false -> `black
       | `black,true  -> push c; `white
-      | `black,false -> `black) |> ignore;
+      | `black,false -> `black) : [`black | `white]) |> ignore;
   Buffer.contents buf
 
 let normalize_descr s =

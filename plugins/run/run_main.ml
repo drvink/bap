@@ -12,7 +12,7 @@ module Callgraph = Graphs.Callgraph
 module Param = struct
   open Config;;
 
-  manpage [
+  let () = manpage [
     `S "DESCRIPTION";
     `P "Populates and run the Primus Jobs queue.
       Creates new job for each specified system and runs the queued

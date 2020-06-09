@@ -197,7 +197,7 @@ let () =
     matches true requested name && not (matches false excluded name) in
   match what with
   | `Recipes ->
-    ignore (Sys.command "bap print-recipes");
+    ignore (Sys.command "bap print-recipes" : int);
     Format.printf "Use the `print-recipes' for the detailed list of recipes\n";
     Ok ()
   | `Plugins ->

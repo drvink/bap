@@ -132,7 +132,7 @@ module Cmdline = struct
   let print_p = pass "print"
   let mark_p  = pass "mark"
 
-  let passes {Config.get=(!)} = ignore !taint_p, !print_p, !mark_p
+  let passes {Config.get=(!)} = ignore (!taint_p : bool), !print_p, !mark_p
 
   let () =
     Config.manpage man;

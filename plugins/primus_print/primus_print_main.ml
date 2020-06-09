@@ -10,7 +10,7 @@ include Self()
 
 module Param = struct
   open Config;;
-  manpage [
+  let () = manpage [
     `S "DESCRIPTION";
     `P "Monitors a Lisp Machine execution."
   ]

@@ -170,7 +170,7 @@ let run level proj =
         O.remove_dead_code sub data)
 
 let () =
-  Config.manpage [
+  let () = Config.manpage [
     `S "SYNOPSIS";
     `Pre "
      $(b,--)$(mname)
@@ -206,7 +206,7 @@ let () =
 
     `S "SEE ALSO";
     `P "$(b,bap-plugin-api)(1), $(b,bap-plugin-ssa)(1)";
-  ];
+  ] in
   let level =
     let doc =
       "Specifies the optimization level. The higher the value the more

@@ -995,8 +995,8 @@ let shortest_path
   let dst = if rev then G.Edge.src else G.Edge.dst in
   let visited = G.Node.Hash_set.create () in
   let dist = G.Node.Table.create  () in
-  let q = Heap.create ~cmp () in
-  let rec loop () = match Heap.pop q with
+  let q = Pairing_heap.create ~cmp () in
+  let rec loop () = match Pairing_heap.pop q with
     | None -> None
     | Some (w,v,p) when G.Node.equal v v2 -> Some (Path.create p w)
     | Some (w,v,p) ->
@@ -1011,8 +1011,8 @@ let shortest_path
         | Some w when w < dev -> ()
         | _ ->
           Hashtbl.set dist ev dev;
-          Heap.add q (dev, ev, e :: p)) in
-  Heap.add q (0, v1, []);
+          Pairing_heap.add q (dev, ev, e :: p)) in
+  Pairing_heap.add q (0, v1, []);
   Hashtbl.set dist v1 0;
   loop ()
 

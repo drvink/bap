@@ -236,7 +236,7 @@ module TypeErrorPrinter(Machine : Primus.Machine.S) = struct
 end
 
 let () =
-  Config.manpage [
+  let () = Config.manpage [
     `S "DESCRIPTION";
     `P "Installs and registers the Primus Lisp library. The library
       implements stdlib interface in Lisp. Only $(i,init) module is
@@ -248,7 +248,7 @@ let () =
 
     `S "SEE ALSO";
     `P "$(b,bap-primus)(3) $(b,bap-run)(1)"
-  ];
+  ] in
 
   let documentation =
     Config.(flag ~doc:"outputs Primus Lisp documentation") "documentation" in

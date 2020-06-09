@@ -165,7 +165,7 @@ let sample ~interval stream =
 
 let create_majors_stream () =
   let stream,s = Stream.create () in
-  let _ = Gc.Expert.Alarm.create (fun () -> Signal.send s ()) in
+  let _ : Gc.Expert.Alarm.t = Gc.Expert.Alarm.create (fun () -> Signal.send s ()) in
   stream
 
 let enable () =

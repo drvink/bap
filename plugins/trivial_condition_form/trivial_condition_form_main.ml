@@ -45,7 +45,7 @@ let main proj =
 
 open Config;;
 
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
   `P "Ensures that all branching conditions are either a variable
 or a constant. We call such representation a Trivial Condition Form

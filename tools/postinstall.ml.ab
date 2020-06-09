@@ -16,7 +16,7 @@ let manpages = [
 let man_of_help prog =
   let man = "man" / sprintf "%s.1" prog in
   let cmd = sprintf "%s --help=groff > %s 2>/dev/null" prog man in
-  ignore (Sys.command cmd);
+  ignore (Sys.command cmd : int);
   man
 
 let bin_exists prog =

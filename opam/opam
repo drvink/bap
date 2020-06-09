@@ -12,8 +12,8 @@ depends: [
   "bitstring"
   "camlzip"
   "cmdliner" {>= "1.0" & < "2.0"}
-  "ppx_jane" {>= "v0.12" & < "v0.13"}
-  "core_kernel" {>= "v0.12" & < "v0.13"}
+  "ppx_jane" {>= "v0.12" & < "v0.14"}
+  "core_kernel" {>= "v0.12" & < "v0.14"}
   "ezjsonm"
   "fileutils"
   "FrontC"
@@ -321,7 +321,7 @@ depexts: [
     "m4"
     "time"
   ] {os-distribution = "archlinux"}
-  ["gmp" "llvm-9" "graphviz" "curl" "libzip"]
+  ["gmp" "llvm9" "graphviz" "curl" "libzip"]
     {os = "macos" & os-distribution = "macports"}
   ["gmp" "llvm@9" "graphviz" "curl" "libzip" "dejagnu"]
     {os = "macos" & os-distribution = "homebrew"}

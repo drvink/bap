@@ -52,7 +52,7 @@ let peek_exn ctxt =
   let future, promise = Future.create () in
   let result = 
     try
-      let _ = Future.peek_exn future in
+      let _ : int = Future.peek_exn future in
       false
     with Invalid_argument  _ -> true in
   assert_bool "peek exn failed" result;

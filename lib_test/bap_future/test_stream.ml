@@ -325,7 +325,7 @@ let foldw_range ~max_stride ~max_width ~f ~init ctxt =
     let f' = Stream.before f ss' in
     Signal.repeat signal ~times:(List.length values + 1) ();
     Promise.fulfill p ();
-    ignore(Future.peek_exn f') in
+    ignore(Future.peek_exn f' : 'a list) in
   let create_set n = Array.init (n + 1) ident |> Array.to_list in
   let stride_set = create_set max_stride in
   let width_set = create_set max_width in

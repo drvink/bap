@@ -16,7 +16,7 @@ include Self()
 module Param = struct
   open Config;;
 
-  manpage [
+  let () = manpage [
     `S "DESCRIPTION";
 
     `P "Beagle is an obfuscated string solver that uses CPU emulation

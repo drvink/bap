@@ -409,14 +409,16 @@ let main ctxt =
     Seq.fold ~init:{args=Var.Map.empty} ~f:(fun init sub ->
         Term.enum arg_t sub |>
         Seq.fold ~init ~f:(fun {args} arg ->
-            if Arg.intent arg = Some In then {args}
-            else match Var.typ (Arg.lhs arg) with
-              | Unk | Mem _ -> {args}
-              | Imm width ->
-                let var = Arg.lhs arg in
-                match Generator.for_var ~seed ~width var generators with
-                | None -> {args}
-                | Some gen -> {args = Map.set args var gen})) in
+            match Arg.intent arg with
+            | Some In -> {args}
+            | _ ->
+              match Var.typ (Arg.lhs arg) with
+                | Unk | Mem _ -> {args}
+                | Imm width ->
+                  let var = Arg.lhs arg in
+                  match Generator.for_var ~seed ~width var generators with
+                  | None -> {args}
+                  | Some gen -> {args = Map.set args var gen})) in
   let module RandomizeEnvironment(Machine : Primus.Machine.S) = struct
     open Machine.Syntax
 

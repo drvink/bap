@@ -24,7 +24,7 @@ let sexp ctxt =
 let binp ctxt =
   let b = Bytes.of_string test_string in
   let buf = Bigstring.create (Bytes.bin_size_t b) in
-  let _ = Bytes.bin_write_t buf ~pos:0 b in
+  let _ : int = Bytes.bin_write_t buf ~pos:0 b in
   let pos_ref = ref 0 in
   let b' = Bytes.bin_read_t buf ~pos_ref in
   assert_equal ~ctxt b b'

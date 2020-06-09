@@ -113,7 +113,7 @@ let extract_script data code attrs =
       switch x @@
       case python (fun line -> Buffer.add_string buf line) @@
       default ignore);
-  (program_visitor buf attrs)#run code ("",None) |> ignore;
+  ((program_visitor buf attrs)#run code ("",None) : string * word option) |> ignore;
   Buffer.add_string buf Py.epilogue;
   Buffer.contents buf
 

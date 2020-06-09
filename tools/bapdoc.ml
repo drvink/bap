@@ -154,7 +154,7 @@ let build_manual {man; help} tool =
   | _ ->
     eprintf "Warning: can't render manpage for %s\n" tool;
     eprintf "Called as %S, got:\n" (help tool);
-    ignore(Sys.command @@ sprintf "%s >&2" (help tool));
+    ignore(Sys.command @@ sprintf "%s >&2" (help tool) : int);
     eprintf "\n%!"
 
 let generate_manual () =

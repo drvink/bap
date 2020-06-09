@@ -87,7 +87,7 @@ let register enabled seed =
             scheduler will pick between the states randomly."
 
 open Config;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
 
   `P

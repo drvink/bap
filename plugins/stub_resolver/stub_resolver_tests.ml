@@ -102,7 +102,7 @@ let tid_for_name_exn prog name =
   Term.to_sequence sub_t prog |>
   Seq.find_map
     ~f:(fun s ->
-        if Sub.name s = name
+        if String.equal (Sub.name s) name
         then Some (Term.tid s)
         else None) |>
   Option.value_exn

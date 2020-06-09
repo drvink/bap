@@ -5,3 +5,4 @@ PKG bap-abi
 
 S .
 B ../../_build/plugins/stub_resolver
+REC

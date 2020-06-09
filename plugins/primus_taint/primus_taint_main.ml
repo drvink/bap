@@ -204,7 +204,7 @@ let set_default_policy name =
   Primus.Machine.add_component (module Init) [@warning "-D"]
 
 open Config;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
 
   `P "The Primus Taint Analysis Framework Control Module";

@@ -120,7 +120,7 @@ let load_or_create_signatures ?comp ?path operation arch =
     | Error e,_ -> fail (Sigs e)
 
 let oracle_of_image img =
-  let starts = Hash_set.create (module Addr) () in
+  let starts = Hash_set.create (module Addr) in
   Image.symbols img |> Table.iteri ~f:(fun mem _ ->
       Hash_set.add starts (Memory.min_addr mem));
   fun mem -> Hash_set.mem starts (Memory.min_addr mem)

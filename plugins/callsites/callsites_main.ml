@@ -88,7 +88,7 @@ let main proj =
   Project.with_program proj (fill_calls prog)
 
 let () =
-  Config.manpage [
+  let () = Config.manpage [
     `S "DESCRIPTION";
     `P "This pass will inject artificial definitions of a subroutine
       arguments at call sites. Consider function $(b,malloc) that has
@@ -110,5 +110,5 @@ let () =
       ...";
     `S "SEE ALSO";
     `P "$(b,bap-plugin-api)(1)"
-  ];
+  ] in
   Config.when_ready (fun _ -> Project.register_pass ~deps:["abi"] main)

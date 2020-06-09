@@ -29,7 +29,7 @@ let init s b =
 ;;
 
 
-Config.manpage [
+let () = Config.manpage [
   `S "DESCRIPTION";
   `P
     "Loads a binary and sets up the environment. This loader is

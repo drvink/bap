@@ -20,11 +20,11 @@ let init _ =
     ~desc:"Sets up PLT entries."
 ;;
 
-Config.manpage [
+let () = Config.manpage [
   `S "DESCRIPTION";
   `P
     "Performs the x86 target specific setup. So far it just initializes
   all flag registers to zero."
 ];;
 
-Config.when_ready init
+let () = Config.when_ready init

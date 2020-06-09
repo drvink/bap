@@ -62,7 +62,7 @@ end
   }
 
   let registry = {
-    unique = Hash_set.create (module String) ();
+    unique = Hash_set.create (module String);
     packages = Hashtbl.create (module String);
   }
 

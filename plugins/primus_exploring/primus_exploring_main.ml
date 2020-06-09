@@ -104,7 +104,7 @@ let register enabled =
     ~desc:("Enables the exploring scheduler (experimental). " ^ desc)
 
 open Config;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
   `P desc;
 ];;

@@ -78,7 +78,7 @@ let main path min_length max_length threshold comp =
 
 
 let () =
-  Config.manpage [
+  let () = Config.manpage [
     `S "DESCRIPTION";
     `P {|
   Identifies function starts using a predefined sets of function
@@ -119,7 +119,7 @@ let () =
     Security 14). 2014.";
     `S "SEE ALSO";
     `P "$(b,bap-byteweight)(1), $(b,bap-plugin-ida)(1), $(b,bap-plugin-read-symbols)(1)"
-  ];
+  ] in
   let open Config in
   let min_length = param int ~default:8 "min-length"
       ~doc:"The minimum length of a word, that could identify a \

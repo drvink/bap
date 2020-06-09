@@ -330,10 +330,10 @@ let main () =
 open Config
 
 ;;
-manpage [
+let () = manpage [
   `S "DESCRIPTION";
   `P "Primus Testing and Program Verification module.";
 ];;
 
 
-when_ready (fun _ -> main ())
+let () = when_ready (fun _ -> main ())

@@ -768,7 +768,7 @@ module Registry = struct
   let public = Hashtbl.create (module Name)
   let classes = Hashtbl.create (module String)
   let slots = Hashtbl.create (module String)
-  let rules = Hash_set.create (module Rule) ()
+  let rules = Hash_set.create (module Rule)
 
   let is_present ~package namespace name =
     match Hashtbl.find namespace package with
@@ -872,7 +872,7 @@ module Documentation = struct
       Buffer.add_string buffer "-- ";
       let column = ref 3 in
       let prev = ref ' ' in
-      let in_white () = !prev = ' ' in
+      let in_white () = Char.equal !prev ' ' in
       let push c =
         if !column >= max_column && in_white () then begin
           Buffer.add_string buffer "\n-- ";
@@ -899,7 +899,7 @@ module Documentation = struct
               Format.(pp_print_list ~pp_sep pp_print_string) ps)
 
     let pp ppf {parameters; provides; requires; name; comment} =
-      if comment <> "" then
+      if not (String.equal comment "") then
         Format.fprintf ppf "%s@\n" (refmt comment);
       Format.fprintf ppf "@[<v2>%a%a ::=@\n"
         Name.pp name pp_parameters parameters;
